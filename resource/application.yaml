@@ -1,0 +1,11 @@
+redis:
+    host: localhost
+    port: 6379
+    dbIndex: 0
+    password: r3d1sp4s$
+datasource:
+    url: "postgres://omni-customer:omnicustomerpass@localhost:5432/omni-customer"
+application:
+    port: ":8080"
+cache:
+    expireactivation: 3600

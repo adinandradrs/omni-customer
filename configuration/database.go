@@ -6,9 +6,8 @@ import (
 	"gorm.io/gorm"
 )
 
-func ConfigDatabase() *gorm.DB {
-	databaseURL := "postgres://omni-customer:omnicustomerpass@localhost:5432/omni-customer"
-	database, err := gorm.Open(postgres.Open(databaseURL), &gorm.Config{})
+func ConfigDatabase(databaseConfig string) *gorm.DB {
+	database, err := gorm.Open(postgres.Open(databaseConfig), &gorm.Config{})
 	if err != nil {
 		log15.Error("error when try to open database", err)
 	}
