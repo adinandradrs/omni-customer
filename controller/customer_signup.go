@@ -13,7 +13,7 @@ import (
 	"gopkg.in/inconshreveable/log15.v2"
 )
 
-func (boiler ConfigurationHandler) CustomerSignup(context *gin.Context) {
+func (boiler ConfigurationHandler) CustomerSignup(context *gin.Context) { //dependency injection boiler
 	var input request.CustomerSignupRequest
 	if error := context.ShouldBindJSON(&input); error != nil {
 		context.JSON(http.StatusBadRequest, response.BaseResponse{

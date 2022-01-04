@@ -14,7 +14,7 @@ import (
 	"gopkg.in/inconshreveable/log15.v2"
 )
 
-func (boiler ConfigurationHandler) CustomerActivation(context *gin.Context) {
+func (boiler ConfigurationHandler) CustomerActivation(context *gin.Context) { //dependency injection boiler
 	var input request.CustomerActivationRequest
 	if error := context.ShouldBindJSON(&input); error != nil {
 		context.JSON(http.StatusBadRequest, response.BaseResponse{

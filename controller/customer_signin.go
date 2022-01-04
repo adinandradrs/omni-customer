@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func (boiler ConfigurationHandler) CustomerSignin(context *gin.Context) {
+func (boiler ConfigurationHandler) CustomerSignin(context *gin.Context) { //dependency injection boiler
 	var input request.CustomerSigninRequest
 	if error := context.ShouldBindJSON(&input); error != nil {
 		context.JSON(http.StatusBadRequest, response.BaseResponse{
