@@ -4,8 +4,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"omni-customer/model/response"
+	"strings"
 	"time"
 
+	"github.com/gin-gonic/gin"
 	"github.com/go-redis/redis"
 	"github.com/golang-jwt/jwt"
 	"github.com/mitchellh/mapstructure"
@@ -76,4 +78,8 @@ func GetCustomerInfo(cache *redis.Client, tokenString string, tokenSecret string
 		return response.CustomerLoginResponse{}, fmt.Errorf(ERR_MSG_UNAUTHORIZED)
 	}
 	return customerLoginResponse, nil
+}
+
+func GetBearerToken(context *gin.Context) string {
+	return strings.Split(context.GetHeader("Authorization"), "Bearer ")[1]
 }

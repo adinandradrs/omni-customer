@@ -1,8 +1,8 @@
 package response
 
 type CustomerLoginResponse struct {
-	Token    string
-	UserId   int
-	Email    string
-	Fullname string
+	Token    string `json:"token"`
+	UserId   int    `json:"userId"`
+	Email    string `json:"email"`
+	Fullname string `json:"email"`
 }

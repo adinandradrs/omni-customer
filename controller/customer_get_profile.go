@@ -13,7 +13,7 @@ import (
 )
 
 func (boiler ConfigurationHandler) CustomerGetProfile(context *gin.Context) {
-	tokenString := context.GetHeader("Authorization")
+	tokenString := utility.GetBearerToken(context)
 	customerLoginResponse, errorCustomerInfo := utility.GetCustomerInfo(boiler.Cache, tokenString, boiler.AppConfig.GetString("jwt.secret"))
 	if errorCustomerInfo != nil {
 		context.JSON(http.StatusUnauthorized, response.BaseResponse{

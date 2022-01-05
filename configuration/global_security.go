@@ -11,7 +11,7 @@ import (
 
 func GlobalSecurity(cache *redis.Client, tokenSecret string) gin.HandlerFunc {
 	return func(context *gin.Context) {
-		tokenString := context.GetHeader("Authorization")
+		tokenString := utility.GetBearerToken(context)
 		log15.Info("Global security is executed! ", tokenString)
 		if result := utility.ValidateToken(cache, tokenString, tokenSecret); !result {
 			context.AbortWithStatus(http.StatusUnauthorized)

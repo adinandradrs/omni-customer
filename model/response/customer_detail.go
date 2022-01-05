@@ -1,6 +1,6 @@
 package response
 
 type CustomerDetail struct {
-	Email    string
-	Fullname string
+	Email    string `json:"email"`
+	Fullname string `json:"fullname"`
 }
