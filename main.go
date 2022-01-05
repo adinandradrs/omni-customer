@@ -20,8 +20,12 @@ func main() {
 	auth.POST("/v1/sign-up", restBoiler.CustomerSignup)
 	auth.POST("/v1/sign-in", restBoiler.CustomerSignin)
 
-	whitelist := route.Group("/public")
-	whitelist.POST("/v1/activate", restBoiler.CustomerActivation)
+	public := route.Group("/public")
+	public.POST("/v1/activate", restBoiler.CustomerActivation)
+
+	info := route.Group("/info")
+	info.Use(configuration.GlobalSecurity(cache, appConfig.GetString("jwt.secret")))
+	info.GET("/v1/profile", restBoiler.CustomerGetProfile)
 
 	route.Run(viper.GetString("application.port"))
 }

@@ -43,7 +43,9 @@ func (boiler ConfigurationHandler) CustomerActivation(context *gin.Context) { //
 		return
 	} else {
 		var existingCustomer entity.Customer
-		if result := boiler.DB.Where("activation_id = ?", input.ActivationId).Where("status = ?", constants.CUSTOMER_STATUS_REGISTERED).Where("email = ?", dataCache).First(&existingCustomer); result.Error != nil {
+		if result := boiler.DB.Where("activation_id = ?", input.ActivationId).
+			Where("is_deleted = false").
+			Where("status = ?", constants.CUSTOMER_STATUS_REGISTERED).Where("email = ?", dataCache).First(&existingCustomer); result.Error != nil {
 			log15.Error("Customer activation failed to find with error = ", result.Error)
 			context.JSON(http.StatusNotFound, response.BaseResponse{
 				Data:    nil,
