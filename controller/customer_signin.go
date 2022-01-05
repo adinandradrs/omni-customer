@@ -49,10 +49,12 @@ func (boiler ConfigurationHandler) CustomerSignin(context *gin.Context) { //depe
 		customerLoginResponse := response.CustomerLoginResponse{Email: existingCustomer.Email, UserId: int(existingCustomer.Id), Fullname: existingCustomer.Fullname}
 		customerLoginResponse.Token, _ = utility.GenerateToken(existingCustomer.Id, &customerLoginResponse, boiler.AppConfig.GetUint("jwt.expiration"), boiler.AppConfig.GetString("jwt.secret"))
 		customerLoginResponseJSON, _ := json.Marshal(customerLoginResponse)
+		boiler.Cache.Del(constants.CACHE_CUSTOMER_LOGIN + existingCustomer.Email)
 		err := boiler.Cache.SetNX(constants.CACHE_CUSTOMER_LOGIN+existingCustomer.Email, customerLoginResponseJSON, boiler.AppConfig.GetDuration("cache.expireactivation")*time.Second).Err()
 		if err != nil {
 			panic(err)
 		}
+		customerLoginResponse.UserId = 0
 		context.JSON(http.StatusOK, response.BaseResponse{
 			Data:    structs.Map(customerLoginResponse),
 			Message: constants.SUCCESS_MSG_DATA_FOUND,
