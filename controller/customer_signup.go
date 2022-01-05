@@ -10,6 +10,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
+	"golang.org/x/crypto/bcrypt"
 	"gopkg.in/inconshreveable/log15.v2"
 )
 
@@ -24,10 +25,19 @@ func (boiler ConfigurationHandler) CustomerSignup(context *gin.Context) { //depe
 		return
 	}
 	uid := uuid.New()
+	encryptedPassword, error := bcrypt.GenerateFromPassword([]byte(input.Password), 14)
+	if error != nil {
+		context.JSON(http.StatusInternalServerError, response.BaseResponse{
+			Data:    nil,
+			Message: error.Error(),
+			Result:  false,
+		})
+		return
+	}
 	customer := entity.Customer{
 		Fullname:     input.Fullname,
 		Email:        input.Email,
-		Password:     input.Password,
+		Password:     string(encryptedPassword),
 		Status:       constants.CUSTOMER_STATUS_REGISTERED,
 		IsDeleted:    false,
 		CreatedDate:  time.Now(),

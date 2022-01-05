@@ -1,4 +1,4 @@
-package constants
+package utility
 
 const ERR_MSG_SOMETHING_WENT_WRONG = "Something went wrong"
 const ERR_MSG_DATA_NOT_FOUND = "Data not found"
@@ -10,3 +10,4 @@ const CUSTOMER_STATUS_ACTIVATED = 1
 const CUSTOMER_STATUS_BLOCKED = 2
 const CUSTOMER_STATUS_SUSPENDED = 3
 const CACHE_CUSTOMER_ACTIVATION = "CUSTOMERACTIVATION:"
+const CACHE_CUSTOMER_LOGIN = "CUSTOMERLOGIN:"

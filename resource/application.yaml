@@ -9,3 +9,13 @@ application:
     port: ":8080"
 cache:
     expireactivation: 3600
+jwt:
+    expiration: 720
+    refreshexpiration: 10800
+    secret: "Aval4nch3X8_a!324$"
+    refreshsecret: "TuRb0$_p!934#"
+api:
+  micro:
+    path: '/api/customer'
+  key:
+    internal: "60d6ac10-6445-42ba-b916-8dfd43e81e46"

@@ -14,8 +14,14 @@ func main() {
 	database := configuration.ConfigDatabase(appConfig.GetString("datasource.url"))
 	cache := configuration.ConfigCache(appConfig.GetString("redis.host")+":"+appConfig.GetString("redis.port"), appConfig.GetString("redis.password"))
 	restBoiler := controller.RestBoiler(database, cache, &appConfig) //dependency injection ke setiap implementor
-	route.POST("/v1/sign-up", restBoiler.CustomerSignup)
-	route.POST("/v1/sign-in", restBoiler.CustomerSignin)
-	route.POST("/v1/activate", restBoiler.CustomerActivation)
+
+	auth := route.Group("/auth")
+	auth.Use(configuration.ThirdPartySecurity)
+	auth.POST("/v1/sign-up", restBoiler.CustomerSignup)
+	auth.POST("/v1/sign-in", restBoiler.CustomerSignin)
+
+	whitelist := route.Group("/public")
+	whitelist.POST("/v1/activate", restBoiler.CustomerActivation)
+
 	route.Run(viper.GetString("application.port"))
 }
