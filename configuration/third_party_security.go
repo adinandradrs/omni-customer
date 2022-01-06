@@ -1,17 +1,18 @@
 package configuration
 
 import (
-	"net/http"
+	"omni-customer/utility"
 
 	"github.com/gin-gonic/gin"
+	"github.com/go-redis/redis"
 	"gopkg.in/inconshreveable/log15.v2"
 )
 
-func ThirdPartySecurity(context *gin.Context) {
-	apiKey := context.GetHeader("x-api-key")
-	log15.Info("Third party security is executed! ", apiKey)
-	if len(apiKey) < 1 {
-		context.AbortWithStatus(http.StatusUnauthorized)
+func ThirdPartySecurity(internalApiKey string, cache *redis.Client) gin.HandlerFunc {
+	return func(context *gin.Context) {
+		apiKey := utility.GetApiKey(context)
+		log15.Info("Third party security is executed! ", apiKey)
+		doRunValidate(context, apiKey, internalApiKey, cache)
 	}
-	context.Next()
+
 }

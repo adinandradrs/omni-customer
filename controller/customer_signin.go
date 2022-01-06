@@ -27,7 +27,7 @@ func (boiler ConfigurationHandler) CustomerSignin(context *gin.Context) { //depe
 		return
 	}
 	var existingCustomer entity.Customer
-	if result := boiler.DB.Where("email = ?", input.Email).Where("status = ?", constants.CUSTOMER_STATUS_ACTIVATED).First(&existingCustomer); result.Error != nil {
+	if result := boiler.DB.Select("id, password, email, fullname").Where("email = ?", input.Email).Where("status = ?", constants.CUSTOMER_STATUS_ACTIVATED).First(&existingCustomer); result.Error != nil {
 		log15.Error("Customer sign in failed to find with error = ", result.Error)
 		context.JSON(http.StatusUnauthorized, response.BaseResponse{
 			Data:    nil,
@@ -36,7 +36,7 @@ func (boiler ConfigurationHandler) CustomerSignin(context *gin.Context) { //depe
 		})
 		return
 	}
-	invalid := bcrypt.CompareHashAndPassword([]byte(existingCustomer.Password), []byte(input.Password))
+	invalid := bcrypt.CompareHashAndPassword([]byte(existingCustomer.Password.String), []byte(input.Password))
 	if invalid != nil {
 		log15.Error("Customer status is forbidden with error, password mismatch")
 		context.JSON(http.StatusForbidden, response.BaseResponse{
@@ -46,11 +46,11 @@ func (boiler ConfigurationHandler) CustomerSignin(context *gin.Context) { //depe
 		})
 		return
 	} else {
-		customerLoginResponse := response.CustomerLoginResponse{Email: existingCustomer.Email, UserId: int(existingCustomer.Id), Fullname: existingCustomer.Fullname}
+		customerLoginResponse := response.CustomerLoginResponse{Email: existingCustomer.Email.String, UserId: int(existingCustomer.Id), Fullname: existingCustomer.Fullname.String}
 		customerLoginResponse.Token, _ = utility.GenerateToken(existingCustomer.Id, &customerLoginResponse, boiler.AppConfig.GetUint("jwt.expiration"), boiler.AppConfig.GetString("jwt.secret"))
 		customerLoginResponseJSON, _ := json.Marshal(customerLoginResponse)
-		boiler.Cache.Del(constants.CACHE_CUSTOMER_LOGIN + existingCustomer.Email)
-		err := boiler.Cache.SetNX(constants.CACHE_CUSTOMER_LOGIN+existingCustomer.Email, customerLoginResponseJSON, boiler.AppConfig.GetDuration("cache.expireactivation")*time.Second).Err()
+		boiler.Cache.Del(constants.CACHE_CUSTOMER_LOGIN + existingCustomer.Email.String)
+		err := boiler.Cache.SetNX(constants.CACHE_CUSTOMER_LOGIN+existingCustomer.Email.String, customerLoginResponseJSON, boiler.AppConfig.GetDuration("cache.expireactivation")*time.Second).Err()
 		if err != nil {
 			panic(err)
 		}

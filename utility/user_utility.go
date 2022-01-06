@@ -83,3 +83,7 @@ func GetCustomerInfo(cache *redis.Client, tokenString string, tokenSecret string
 func GetBearerToken(context *gin.Context) string {
 	return strings.Split(context.GetHeader("Authorization"), "Bearer ")[1]
 }
+
+func GetApiKey(context *gin.Context) string {
+	return context.GetHeader("x-api-key")
+}
