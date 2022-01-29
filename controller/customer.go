@@ -3,7 +3,7 @@ package controller
 import (
 	"net/http"
 
-	commodel "github.com/adinandradrs/codefun-go-common/model"
+	cbase "github.com/adinandradrs/codefun-go-common"
 	"github.com/adinandradrs/codefun-go-service/util"
 	"github.com/adinandradrs/omni-customer/model"
 	"github.com/adinandradrs/omni-customer/service"
@@ -38,7 +38,7 @@ func (c *customerControllerCapsule) Activate(ctx *gin.Context) {
 		util.ThrowAnyError(resp, ctx)
 		return
 	}
-	ctx.JSON(http.StatusOK, commodel.RestResponse{
+	ctx.JSON(http.StatusOK, cbase.RestResponse{
 		Message: util.SUCCESS_MSG_DATA_SUBMIT,
 		Result:  true,
 		Data:    resp,
@@ -56,7 +56,7 @@ func (c *customerControllerCapsule) Register(ctx *gin.Context) {
 		util.ThrowAnyError(resp, ctx)
 		return
 	}
-	ctx.JSON(http.StatusOK, commodel.RestResponse{
+	ctx.JSON(http.StatusOK, cbase.RestResponse{
 		Message: util.SUCCESS_MSG_DATA_SUBMIT,
 		Result:  true,
 		Data:    resp,

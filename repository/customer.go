@@ -1,12 +1,12 @@
 package repository
 
 import (
-	"github.com/adinandradrs/codefun-go-service/base"
+	cbase "github.com/adinandradrs/codefun-go-service"
 	"github.com/adinandradrs/omni-customer/model/entity"
 )
 
 type customerCapsule struct {
-	super base.BaseRepositoryCapsule
+	super cbase.BaseRepositoryCapsule
 }
 
 type CustomerRepository interface {
@@ -15,7 +15,7 @@ type CustomerRepository interface {
 	FindByPhone(phone string) (out entity.Customer, err error)
 }
 
-func NewCustomerRepository(super base.BaseRepositoryCapsule) CustomerRepository {
+func NewCustomerRepository(super cbase.BaseRepositoryCapsule) CustomerRepository {
 	return &customerCapsule{
 		super: super,
 	}

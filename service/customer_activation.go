@@ -1,8 +1,7 @@
 package service
 
 import (
-	"github.com/adinandradrs/codefun-go-common/base"
-	commodel "github.com/adinandradrs/codefun-go-common/model"
+	cbase "github.com/adinandradrs/codefun-go-common"
 	"github.com/adinandradrs/omni-customer/model"
 	"github.com/adinandradrs/omni-customer/repository"
 	"github.com/mitchellh/mapstructure"
@@ -13,7 +12,7 @@ type customerActivationCapsule struct {
 }
 
 type CustomerActivation interface {
-	base.BaseService
+	cbase.BaseService
 }
 
 func NewCustomerActivation(custrepo repository.CustomerRepository) CustomerActivation {
@@ -26,5 +25,5 @@ func (c *customerActivationCapsule) Execute(input interface{}) (interface{}, err
 	req := model.CustomerActivationRequest{}
 	mapstructure.Decode(input, &req)
 	c.custrepo.Activate(req.PhoneNo)
-	return commodel.ValidationResponse{Result: true}, nil
+	return cbase.ValidationResponse{Result: true}, nil
 }
