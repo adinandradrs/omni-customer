@@ -15,12 +15,12 @@ type customerControllerCapsule struct {
 	register   service.CustomerRegister
 }
 
-type RoleController interface {
+type CustomerController interface {
 	Activate(ctx *gin.Context)
 	Register(c *gin.Context)
 }
 
-func NewRoleController(activation service.CustomerActivation, register service.CustomerRegister) RoleController {
+func NewCustomerController(activation service.CustomerActivation, register service.CustomerRegister) CustomerController {
 	return &customerControllerCapsule{
 		activation: activation,
 		register:   register,
