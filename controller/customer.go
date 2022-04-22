@@ -3,8 +3,8 @@ package controller
 import (
 	"net/http"
 
-	cbase "github.com/adinandradrs/codefun-go-common"
-	"github.com/adinandradrs/codefun-go-service/util"
+	cbase "github.com/adinandradrs/boiler-go-common"
+	"github.com/adinandradrs/boiler-go-service/util"
 	"github.com/adinandradrs/omni-customer/model"
 	"github.com/adinandradrs/omni-customer/service"
 	"github.com/gin-gonic/gin"
