@@ -3,8 +3,8 @@ module github.com/adinandradrs/omni-customer
 go 1.17
 
 require (
-	github.com/adinandradrs/codefun-go-common v0.0.0-20220129185527-bd4e4f9dba00
-	github.com/adinandradrs/codefun-go-service v0.0.0-20220129190003-16999562cdcd
+	github.com/adinandradrs/boiler-go-common v0.0.0-20220129185527-bd4e4f9dba00
+	github.com/adinandradrs/boiler-go-service v0.0.0-20220129190003-16999562cdcd
 	github.com/gin-gonic/gin v1.7.7
 	github.com/mitchellh/mapstructure v1.4.3
 )
