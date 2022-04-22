@@ -1,7 +1,7 @@
 package repository
 
 import (
-	cbase "github.com/adinandradrs/codefun-go-service"
+	cbase "github.com/adinandradrs/boiler-go-service"
 	"github.com/adinandradrs/omni-customer/model/entity"
 )
 
