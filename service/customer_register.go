@@ -1,7 +1,7 @@
 package service
 
 import (
-	cbase "github.com/adinandradrs/codefun-go-common"
+	cbase "github.com/adinandradrs/boiler-go-common"
 	"github.com/adinandradrs/omni-customer/model"
 	"github.com/adinandradrs/omni-customer/model/entity"
 	"github.com/adinandradrs/omni-customer/repository"
